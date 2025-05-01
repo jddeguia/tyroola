@@ -26,18 +26,9 @@ aggregates AS (
         SUM(CASE WHEN event_name = 'purchase' THEN 1 ELSE 0 END) AS users_completed_purchase
     FROM mart
     GROUP BY ALL
-),
-
-conversion_rates AS (
-    SELECT *,
-        ROUND(SAFE_DIVIDE(users_added_to_cart, users_viewed_product), 2) AS view_to_cart_rate,
-        ROUND(SAFE_DIVIDE(users_started_checkout, users_added_to_cart), 2) AS cart_to_checkout_rate,
-        ROUND(SAFE_DIVIDE(users_completed_purchase, users_started_checkout), 2) AS checkout_to_purchase_rate,
-        ROUND(SAFE_DIVIDE(users_completed_purchase, users_viewed_product), 2) AS overall_conversion_rate
-    FROM aggregates
 )
 
-SELECT * FROM conversion_rates
+SELECT * FROM aggregates
 
         
 
