@@ -15,6 +15,7 @@ WITH base AS (
         ecommerce.purchase_revenue_in_usd,
         ecommerce.shipping_value_in_usd,
         ecommerce.refund_value_in_usd,
+        geo.country AS country,
         (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'payment_type') AS payment_type,
         (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'source') AS utm_source,
         (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'medium') AS utm_medium,
