@@ -23,7 +23,7 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 on-run-start:
-  - "{{ enforce_prod_branch() }}"
+  - "{{ check_branch() }}"
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
