@@ -12,6 +12,3 @@ WITH base AS (
 )
 
 SELECT * FROM base
-
-
-

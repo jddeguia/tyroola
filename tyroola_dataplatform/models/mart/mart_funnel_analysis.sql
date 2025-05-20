@@ -8,7 +8,7 @@
 
 WITH base AS (
     SELECT *
-    FROM {{ ref('stg_funnel_analysis') }}
+    FROM {{ ref('stg_funnel_analysis_table') }}
 )
 
 SELECT * FROM base

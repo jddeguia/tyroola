@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: base_funnel_analysis
+    description: >
+      A base funnel analysis model built on GA4 event data. Extracts key e-commerce
+      interaction events and enriches them with user, device, geo, UTM, and product data.
+    columns:
+      - name: event_date
+        description: The date of the event.
+        tests:
+          - not_null
+
+      - name: event_timestamp
+        description: The timestamp of the event.
+        tests:
+          - not_null
+
+      - name: user_pseudo_id
+        description: Unique identifier for a user.
+        tests:
+          - not_null
+
+      - name: ga_session_id
+        description: GA session ID extracted from event parameters.
+
+      - name: event_name
+        description: Name of the GA4 event (e.g., view_item, add_to_cart).
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['view_item', 'add_to_cart', 'begin_checkout', 'purchase']
+
+      - name: device_category
+        description: The device category used by the user.
+
+      - name: product_name
+        description: Name of the product involved in the event.
+
+      - name: brand
+        description: Brand of the product.
+
+      - name: item_category
+        description: Category of the item.
+
+      - name: total_item_quantity
+        description: Quantity of items in the ecommerce event.
+
+      - name: purchase_revenue_in_usd
+        description: Revenue from purchase event in USD.
+
+      - name: shipping_value_in_usd
+        description: Shipping value in USD.
+
+      - name: refund_value_in_usd
+        description: Refund value in USD.
+
+      - name: country
+        description: Country of the user based on geo data.
+
+      - name: payment_type
+        description: Payment type extracted from event parameters.
+
+      - name: utm_source
+        description: UTM source of the traffic.
+
+      - name: utm_medium
+        description: UTM medium of the traffic.
+
+      - name: utm_campaign
+        description: UTM campaign of the traffic.
+
+      - name: session_id
+        description: A composite session identifier combining user_pseudo_id and ga_session_id.
+        tests:
+          - not_null
