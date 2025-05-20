@@ -22,6 +22,8 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+on-run-start:
+  - "{{ enforce_prod_branch() }}"
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -29,8 +31,17 @@ clean-targets:         # directories to be removed by `dbt clean`
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
+
 models:
   tyroola_dataplatform:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: table
+    # Default schema for all models (prod -> tyroola_data_platform_prod, dev -> tyroola_data_platform_dev)
+    +schema: "{{ target.name }}"  
+    
+    # Environment-specific settings (optional)
+    config:
+      dev:
+        +materialized: view   # Views in dev (faster iteration)
+        +tags: ["dev"]
+      prod:
+        +materialized: table  # Tables in prod (better performance)
+        +tags: ["prod"]
